@@ -42,6 +42,11 @@ local function createNewComponent()
 
     end
 
+    function Radial:willUnmount()
+        if self.props.unmount ~= nil then
+            self.props.unmount(self.state.selected)
+        end
+    end
 
     local function SubSection(props)
         local posfactor = (props.holeSize*0.5)
