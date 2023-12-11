@@ -199,27 +199,36 @@ local function createNewComponent()
                     self:setState(function()
                         return {selected = f}
                     end)
-                end
-            }, 
+                end,
+                [Roact.Event.MouseLeave] = function(...)
+                    self:setState(function()
+                        return {
+                            selected = 0
+                        }
+                    end)
+                end,
+            },
                 sections
             )
         }
 
-        if self.props.label ~= false and self.props.options[self.state.selected].label ~= nil then
-            local labelsize = self.props.label and self.props.label.size or 0.4
-            children["Label"] = Roact.createElement("TextLabel", {
-                Text = stripSpaces(self.props.options[self.state.selected].label),
-                Size = UDim2.fromScale(labelsize, labelsize),
-                TextScaled = true,
-                RichText = false,
-                BackgroundTransparency = 1,
-                BorderSizePixel = 0,
-                AnchorPoint = Vector2.new(0.5, 0.5),
-                Position = UDim2.fromScale(0.5, 0.5),
-                FontFace = Font.fromName(self.props.label and self.props.label.font or "Oswald"),
-                TextColor3 = self.props.label and self.props.label.color or Color3.new(0,0,0),
-                TextTransparency = self.props.label and self.props.label.transparency or 0,
-            })
+        if self.state.selected  ~= 0 then
+            if self.props.label ~= false and self.props.options[self.state.selected].label ~= nil then
+                local labelsize = self.props.label and self.props.label.size or 0.4
+                children["Label"] = Roact.createElement("TextLabel", {
+                    Text = stripSpaces(self.props.options[self.state.selected].label),
+                    Size = UDim2.fromScale(labelsize, labelsize),
+                    TextScaled = true,
+                    RichText = false,
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0,
+                    AnchorPoint = Vector2.new(0.5, 0.5),
+                    Position = UDim2.fromScale(0.5, 0.5),
+                    FontFace = Font.fromName(self.props.label and self.props.label.font or "Oswald"),
+                    TextColor3 = self.props.label and self.props.label.color or Color3.new(0,0,0),
+                    TextTransparency = self.props.label and self.props.label.transparency or 0,
+                })
+            end
         end
 
         return Roact.createElement("CanvasGroup", { -- CanvasGroup
