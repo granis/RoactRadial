@@ -179,6 +179,7 @@ local function createNewComponent()
             
             Button = Roact.createElement("ImageButton", {
                 ImageTransparency = 1,
+                Modal = self.props.modal or false,
                 BackgroundTransparency = 1,
                 AutoButtonColor = false,
                 Size = UDim2.fromScale(1,1),
